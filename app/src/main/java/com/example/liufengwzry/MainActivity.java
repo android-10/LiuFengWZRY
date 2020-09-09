@@ -13,10 +13,19 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.liufengwzry.base.BaseActivity;
 import com.example.liufengwzry.databinding.ActivityMainBinding;
+import com.example.liufengwzry.entitiy.News;
+import com.example.liufengwzry.network.Client;
+import com.example.liufengwzry.util.Util;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity<ViewModel, ActivityMainBinding> {
 
@@ -35,13 +44,23 @@ public class MainActivity extends BaseActivity<ViewModel, ActivityMainBinding> {
     protected int getLayout() {
         return R.layout.activity_main;
     }
-
     @Override
     protected void Go() {
         setSupportActionBar(toolbar);
         Drawer();
+        Client.create().get(callback);
     }
+    Callback<List<News>> callback=new Callback<List<News>>() {
+        @Override
+        public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+            Util.t(response.body());
+        }
 
+        @Override
+        public void onFailure(Call<List<News>> call, Throwable t) {
+            Util.t(t);
+        }
+    };
     //region 菜单
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

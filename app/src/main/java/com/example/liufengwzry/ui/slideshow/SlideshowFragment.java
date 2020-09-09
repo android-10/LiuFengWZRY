@@ -1,33 +1,48 @@
 package com.example.liufengwzry.ui.slideshow;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.example.liufengwzry.R;
+import com.example.liufengwzry.base.BaseFragment;
+import com.example.liufengwzry.databinding.FragmentSlideshowBinding;
 
-public class SlideshowFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.OnClick;
 
-    private SlideshowViewModel slideshowViewModel;
+public class SlideshowFragment extends BaseFragment<SlideshowViewModel, FragmentSlideshowBinding> {
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+    @BindView(R.id.text_slideshow)
+    TextView textSlideshow;
+
+
+    @Override
+    protected SlideshowViewModel InitVM() {
+        return ViewModelProviders.of(this).get(SlideshowViewModel.class);
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_slideshow;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        vm.getText().observe(getViewLifecycleOwner(), s -> {
+            textSlideshow.setText(s);
         });
-        return root;
+    }
+
+    @OnClick(R.id.text_slideshow)
+    public void onViewClicked() {
+        Toast.makeText(context, vm.getText().getValue(), Toast.LENGTH_LONG).show();
     }
 }

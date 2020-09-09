@@ -19,13 +19,11 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
-    ViewBinding b;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater);
-        b=(FragmentHomeBinding)FragmentHomeBinding.inflate(inflater);
         homeViewModel.getText().observe(getViewLifecycleOwner(),
                 (s)-> {
                     binding.textHome.setText(s);

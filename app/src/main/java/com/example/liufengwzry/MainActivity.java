@@ -18,6 +18,9 @@ import com.example.liufengwzry.network.Client;
 import com.example.liufengwzry.util.Util;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,6 +43,7 @@ public class MainActivity extends BaseActivity<ViewModel, ActivityMainBinding> {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
@@ -50,15 +54,20 @@ public class MainActivity extends BaseActivity<ViewModel, ActivityMainBinding> {
         Drawer();
         Client.create().get(callback);
     }
-    Callback<List<News>> callback=new Callback<List<News>>() {
+    Callback<ResponseBody> callback=new Callback<ResponseBody>() {
         @Override
-        public void onResponse(Call<List<News>> call, Response<List<News>> response) {
-            Util.t(response.body());
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            Util.e(response.body());
+            try{
+                Util.e(new String(response.body().bytes()));
+            }catch (Exception e){
+                Util.e("cc:"+e);
+            }
         }
 
         @Override
-        public void onFailure(Call<List<News>> call, Throwable t) {
-            Util.t(t);
+        public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Util.e(t.toString());
         }
     };
     //region 菜单

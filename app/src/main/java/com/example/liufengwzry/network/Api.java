@@ -15,7 +15,6 @@ import retrofit2.http.Url;
 public interface Api {
 
     //@FormUrlEncoded
-    @GET("posts")
-    Call<List<News>> get();   // 请求体味RequestBody 类型
-
+    @GET("db.json")
+    Call<ResponseBody> get();   // 请求体味RequestBody 类型
 }

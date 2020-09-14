@@ -1,5 +1,8 @@
 package com.example.liufengwzry.network;
 
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.liufengwzry.database.Hero;
 import com.example.liufengwzry.entitiy.News;
 
 import java.util.List;
@@ -16,5 +19,5 @@ public interface Api {
 
     //@FormUrlEncoded
     @GET("db.json")
-    Call<ResponseBody> get();   // 请求体味RequestBody 类型
+    Call<List<Hero>> get();   // 请求体味RequestBody 类型
 }

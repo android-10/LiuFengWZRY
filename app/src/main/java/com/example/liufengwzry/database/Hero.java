@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey;
 public class Hero {
     @PrimaryKey
     @NonNull
-    public String bg;
+    public String bg_url;
 }

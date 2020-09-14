@@ -6,16 +6,18 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import static com.example.liufengwzry.App.getContext;
+
 
 @Database(entities = {Hero.class},version = 1,exportSchema = false)
 public abstract class TheDataBase extends RoomDatabase {
 
     private static TheDataBase instance;
-    public static HeroDao heroDao;
+    public abstract HeroDao heroDao();
 
-    public static synchronized TheDataBase getInstance(Context context){
+    public static synchronized TheDataBase getInstance(){
         if(instance == null){
-            instance= Room.databaseBuilder(context,TheDataBase.class,"lfwzry").build();
+            instance= Room.databaseBuilder(getContext(),TheDataBase.class,"lfwzry").build();
         }
         return instance;
     }

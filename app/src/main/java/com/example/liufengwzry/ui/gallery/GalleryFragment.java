@@ -1,21 +1,19 @@
 package com.example.liufengwzry.ui.gallery;
 
-import android.os.Bundle;
+
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import com.example.liufengwzry.R;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
+import com.example.liufengwzry.adapter.HeroAdapter;
 import com.example.liufengwzry.base.BaseFragment;
 import com.example.liufengwzry.databinding.FragmentGalleryBinding;
-
 public class GalleryFragment extends BaseFragment<GalleryViewModel, FragmentGalleryBinding> {
+
+
+    HeroAdapter heroAdapter;
+    BaseLoadMoreModule loadMore;
 
 
     @Override
@@ -28,16 +26,30 @@ public class GalleryFragment extends BaseFragment<GalleryViewModel, FragmentGall
         return FragmentGalleryBinding.inflate(inflater);
     }
 
+
     @Override
     protected void Observe() {
-        vm.getText().observe(getViewLifecycleOwner(),s->{
-            bind.textGallery.setText(s);
+        vm.getHeros().observe(getViewLifecycleOwner(), heros->{
+            if(loadMore.isLoading()){
+                loadMore.loadMoreComplete();
+            }
+            heroAdapter.addData(heros);
         });
     }
-
     @Override
     protected void Go() {
-
+        initHeroAdapter();
+        vm.loadHeros();
     }
-
+    private void initHeroAdapter(){
+        bind.rec.setLayoutManager(new LinearLayoutManager(context));
+        heroAdapter=new HeroAdapter();
+        loadMore=heroAdapter.getLoadMoreModule();
+        loadMore.setOnLoadMoreListener(()->{
+            vm.loadHeros();
+        });
+        heroAdapter.setAnimationEnable(true);
+        bind.rec.setAdapter(heroAdapter);
+        vm.loadHeros();
+    }
 }

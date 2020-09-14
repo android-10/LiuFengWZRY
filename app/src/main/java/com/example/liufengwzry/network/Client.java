@@ -1,5 +1,6 @@
 package com.example.liufengwzry.network;
 
+import com.example.liufengwzry.database.Hero;
 import com.example.liufengwzry.entitiy.News;
 import com.example.liufengwzry.util.Util;
 
@@ -24,7 +25,7 @@ public class Client {
 
         return client;
     }
-    public void get(Callback callBack){
+    public void get(Callback<List<Hero>> callBack){
 
         api.get().enqueue(callBack);
     }

@@ -52,12 +52,11 @@ public class MainActivity extends BaseActivity<ViewModel, ActivityMainBinding> {
     protected void Go() {
         setSupportActionBar(toolbar);
         Drawer();
-        Client.create().get(callback);
     }
     Callback<ResponseBody> callback=new Callback<ResponseBody>() {
         @Override
         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-            Util.e(response.body());
+            Util.e(response);
             try{
                 Util.e(new String(response.body().bytes()));
             }catch (Exception e){

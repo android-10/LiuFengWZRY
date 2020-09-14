@@ -4,6 +4,10 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.liufengwzry.database.Hero;
+
+import java.util.List;
+
 import static com.example.liufengwzry.App.getContext;
 
 public class Util {
@@ -13,5 +17,8 @@ public class Util {
     }
     public static void e(Object o){
         Log.e("wilyn",o.toString());
+    }
+    public static void excute(Runnable runnable){
+        new Thread(runnable).start();
     }
 }

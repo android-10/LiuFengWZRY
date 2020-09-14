@@ -11,7 +11,9 @@ import java.util.List;
 public interface HeroDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertHeros(Hero... heros);
+    void insertHeros(List<Hero> heroes);
+
+
 
     @Query("SELECT * FROM hero")
     List<Hero> getAllHeros();
